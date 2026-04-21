@@ -1,4 +1,4 @@
-name: Simple CI Pipeline
+name: Improved CI pipeline
 
 on:
   push:
@@ -12,5 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run a simple command
-        run: echo "ci/cd is working!"
+      - name: Check file exists
+        run: test -f hello.txt
+
+      - name: Simulate tests
+        run: echo "All tests have got passed"
+
+      - name: Final message
+        run: echo "pipeline completed successfully"
