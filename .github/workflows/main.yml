@@ -1,22 +1,73 @@
-name: Improved CI pipeline
+name: Intermediate CI/CD Pipeline
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build:
+  validate-build-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check file exists
-        run: test -f hello.txt
+      - name: Verify essential project files
+        run: |
+          test -f hello.txt
+          echo "hello.txt file verified successfully"
 
-      - name: Simulate tests
-        run: echo "All tests have got passed"
+      - name: Simulate code quality checks
+        run: |
+          echo "Checking formatting..."
+          echo "Code formatting looks good"
 
-      - name: Final message
-        run: echo "pipeline completed successfully"
+      - name: Simulate security scan
+        run: |
+          echo "Scanning for vulnerabilities..."
+          echo "No critical issues found"
+
+      - name: Simulate automated tests
+        run: |
+          echo "Running functional tests..."
+          echo "All tests passed successfully"
+
+      - name: Simulate build process
+        run: |
+          echo "Building project package..."
+          echo "Build completed successfully"
+
+      - name: Simulate artifact packaging
+        run: |
+          mkdir build-output
+          cp hello.txt build-output/
+          echo "Artifacts packaged successfully"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: project-artifacts
+          path: build-output/
+
+      - name: Final validation message
+        run: echo "Validation, testing, and packaging pipeline completed successfully"
+
+  deploy-staging:
+    needs: validate-build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Simulate staging deployment
+        run: |
+          echo "Deploying packaged project to staging environment..."
+          echo "Deployment successful"
+
+      - name: Post-deployment verification
+        run: |
+          echo "Running deployment verification checks..."
+          echo "Application is stable in staging"
+
+      - name: Final deployment message
+        run: echo "Intermediate CI/CD workflow completed successfully"
